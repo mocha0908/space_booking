@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja" data-theme="dark">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,14 +8,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
+        /* --- 明るい配色の定義 --- */
         :root {
-            --primary: #ff0055;
-            --background: #121212;
-            --card-bg: #1e1e1e;
-            --text-main: #e0e0e0;
-            --accent-gold: #ffd700;
-            --accent-blue: #00e5ff;
-            --error: #ff3333;
+            --primary: #ff0055;       /* メインカラー（ピンク） */
+            --background: #f5f7fa;    /* 全体の背景色（薄いグレー） */
+            --card-bg: #ffffff;       /* カードの背景色（白） */
+            --text-main: #333333;     /* メイン文字色（濃いグレー） */
+            --accent-gold: #c7a000;   /* アクセント（ゴールド・暗め） */
+            --accent-blue: #007bc7;   /* アクセント（青・視認性重視） */
+            --error: #d32f2f;         /* エラー色（赤） */
+            --border-color: #e0e0e0;  /* 枠線の色 */
         }
 
         body {
@@ -25,12 +27,14 @@
             padding-bottom: 50px;
         }
 
+        /* ヘッダー */
         header {
             text-align: center;
             padding: 30px 20px;
-            background: linear-gradient(180deg, #1a0b14 0%, #121212 100%);
-            border-bottom: 1px solid #333;
-            margin-bottom: 20px;
+            background: #ffffff;
+            border-bottom: 3px solid var(--primary); /* ピンクのラインで強調 */
+            margin-bottom: 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
         .logo-img {
@@ -42,14 +46,14 @@
 
         h1 {
             font-family: 'Orbitron', sans-serif;
-            color: #fff;
-            letter-spacing: 2px;
-            text-shadow: 0 0 10px var(--primary);
+            color: var(--text-main);
+            letter-spacing: 1px;
             font-size: 1.8em;
             margin-bottom: 10px;
         }
-        header p { margin-bottom: 0; color: #888; }
+        header p { margin-bottom: 0; color: #666; }
 
+        /* リンク */
         a.site-link {
             text-decoration: underline;
             font-weight: bold;
@@ -57,36 +61,42 @@
         }
         a.site-link:hover { opacity: 0.8; }
 
+        /* カード（白い枠） */
         .card {
             background-color: var(--card-bg);
-            border: 1px solid #333;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
         }
         .card h3 {
-            border-left: 4px solid var(--primary);
-            padding-left: 10px;
-            margin-bottom: 20px;
-            color: #fff;
+            border-left: 5px solid var(--primary);
+            padding-left: 15px;
+            margin-bottom: 25px;
+            color: var(--text-main);
+            font-weight: bold;
         }
 
+        /* 各種ボックスの明るい配色 */
         .notice-box {
-            background-color: rgba(0, 229, 255, 0.1);
+            background-color: #e3f2fd; /* 薄い青 */
             border: 1px solid var(--accent-blue);
             padding: 15px;
             border-radius: 8px;
             margin-bottom: 15px;
             font-size: 0.95em;
+            color: #0d47a1;
         }
 
         .rule-box {
-            background-color: rgba(255, 0, 85, 0.1);
+            background-color: #ffebee; /* 薄いピンク */
             border: 1px solid var(--primary);
             padding: 15px;
             border-radius: 8px;
             margin-bottom: 15px;
             font-size: 0.95em;
+            color: #b71c1c;
         }
         .rule-box h5 {
             color: var(--primary);
@@ -94,9 +104,10 @@
             font-weight: bold;
         }
 
+        /* シミュレーター */
         details.sim-box {
-            background: #000;
-            border: 1px solid #444;
+            background: #f8f9fa;
+            border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 10px 20px;
             margin-bottom: 20px;
@@ -113,43 +124,54 @@
         .calc-row {
             display: flex;
             justify-content: space-between;
-            border-bottom: 1px solid #333;
-            padding: 5px 0;
-            font-size: 0.9em;
+            border-bottom: 1px solid var(--border-color);
+            padding: 8px 0;
+            font-size: 0.95em;
         }
         .calc-total {
             display: flex;
             justify-content: space-between;
-            margin-top: 10px;
+            margin-top: 12px;
             font-weight: bold;
-            font-size: 1.1em;
+            font-size: 1.2em;
             color: var(--accent-gold);
         }
         .text-red { color: var(--error); }
         .text-blue { color: var(--accent-blue); }
+        .text-gold { color: var(--accent-gold); }
 
+        /* 入力フォームの明るいデザイン */
         input, textarea, select {
-            background-color: #2a2a2a !important;
-            border: 1px solid #444 !important;
-            color: #fff !important;
+            background-color: #ffffff !important;
+            border: 1px solid #cccccc !important;
+            color: var(--text-main) !important;
         }
         input:focus, textarea:focus {
             border-color: var(--primary) !important;
-            box-shadow: 0 0 5px var(--primary) !important;
+            box-shadow: 0 0 0 3px rgba(255, 0, 85, 0.2) !important;
         }
+        label { font-weight: bold; color: #555; }
+        small { color: #777; }
 
+        /* 送信ボタン */
         button[type="submit"] {
             background: var(--primary);
             border: none;
             font-weight: bold;
-            font-size: 1.1em;
+            font-size: 1.2em;
             padding: 15px;
-            margin-top: 20px;
+            margin-top: 25px;
             width: 100%;
+            border-radius: 30px; /* 丸みをつけて親しみやすく */
+            box-shadow: 0 4px 10px rgba(255, 0, 85, 0.3);
+            transition: background-color 0.2s, transform 0.1s;
         }
-        button[type="submit"]:hover { background-color: #cc0044; }
+        button[type="submit"]:hover {
+            background-color: #e6004c;
+            transform: translateY(-2px);
+        }
         
-        input[type=range] { height: 6px; background: #444; border-radius: 5px; outline: none; }
+        input[type=range] { height: 6px; background: #e0e0e0; border-radius: 5px; outline: none; }
     </style>
 </head>
 <body>
@@ -164,18 +186,18 @@
 
         <section class="card">
             <h3>プラン概要</h3>
-            <div class="grid" style="margin-bottom: 20px;">
+            <div class="grid" style="margin-bottom: 25px; text-align: center;">
                 <div>
                     <small>会場レンタル料</small><br>
-                    <strong style="font-size:1.2em;">¥32,000</strong>
+                    <strong style="font-size:1.4em; color:var(--text-main);">¥32,000</strong>
                 </div>
-                <div>
+                <div style="border-left: 1px solid var(--border-color); border-right: 1px solid var(--border-color);">
                     <small>定員</small><br>
-                    <strong>最大 32名</strong>
+                    <strong style="font-size:1.4em; color:var(--text-main);">最大 32名</strong>
                 </div>
                 <div>
                     <small>特典 (通販ポイント)</small><br>
-                    <span style="color:var(--accent-blue)">32,000 pt進呈</span>
+                    <strong style="font-size:1.4em; color:var(--accent-blue);">32,000 pt進呈</strong>
                 </div>
             </div>
             
@@ -215,21 +237,23 @@
                     <input type="text" name="name_kana" required placeholder="例：キングダムタロウ" pattern="[\u30A1-\u30F6ー\s　]*" title="カタカナで入力してください">
                 </label>
 
-                <label>利用希望日
-                    <input type="date" name="date" required>
-                </label>
+                <div class="grid">
+                    <label>利用希望日
+                        <input type="date" name="date" required>
+                    </label>
+                    <label>メールアドレス
+                        <input type="email" name="email" required placeholder="example@gmail.com">
+                    </label>
+                </div>
 
-                <label>メールアドレス <small>※担当者からの連絡に使用します</small>
-                    <input type="email" name="email" required placeholder="example@gmail.com">
-                </label>
-
-                <label>電話番号
-                    <input type="tel" name="tel" required placeholder="090-0000-0000">
-                </label>
-
-                <label>X (Twitter) ID
-                    <input type="text" name="x_id" required placeholder="@TorecaKingdom">
-                </label>
+                <div class="grid">
+                    <label>電話番号
+                        <input type="tel" name="tel" required placeholder="090-0000-0000">
+                    </label>
+                    <label>X (Twitter) ID
+                        <input type="text" name="x_id" required placeholder="@TorecaKingdom">
+                    </label>
+                </div>
 
                 <label style="margin-top: 20px;">利用用途 (大会名・対戦形式など)
                     <input type="text" id="eventTitle" required placeholder="例：第1回 キングダム杯（予選スイスドロー形式）">
@@ -245,14 +269,14 @@
                         <div>
                             <h5>💰 収益予測</h5>
                             <label>参加費 (1人) <input type="number" id="entryFee" value="2000" step="100"></label>
-                            <label>想定人数: <span id="playerCountDisplay" style="color:var(--accent-blue)">32名</span>
+                            <label>想定人数: <span id="playerCountDisplay" style="color:var(--accent-blue); font-weight:bold;">32名</span>
                                 <input type="range" id="playerCountRange" min="1" max="32" value="32">
                             </label>
 
-                            <div style="background:#222; padding:10px; border-radius:5px;">
+                            <div style="background:#f8f9fa; border:1px solid var(--border-color); padding:15px; border-radius:8px;">
                                 <div class="calc-row"><span>売上総額</span><span id="totalRevenue">¥64,000</span></div>
-                                <div class="calc-row"><span>会場費</span><span style="color:#ff8888">-¥32,000</span></div>
-                                <div class="calc-total"><span>主催者利益</span><span id="organizerProfit">¥32,000</span></div>
+                                <div class="calc-row"><span>会場費</span><span style="color:#d32f2f">-¥32,000</span></div>
+                                <div class="calc-total"><span>主催者利益</span><span id="organizerProfit" class="text-gold">¥32,000</span></div>
                             </div>
                         </div>
 
@@ -267,9 +291,9 @@
                                 <label>Best4(各1) <input type="number" id="prizeTop4" value="2500"></label>
                                 <label>Best8(各1) <input type="number" id="prizeTop8" value="0"></label>
                             </div>
-                            <div style="text-align:right; margin-top:10px;">
+                            <div style="text-align:right; margin-top:15px; padding-top:10px; border-top:1px solid var(--border-color);">
                                 <small>残りポイント: </small>
-                                <strong id="remainingPoints" style="font-size:1.2em; color:var(--accent-blue);">0 pt</strong>
+                                <strong id="remainingPoints" style="font-size:1.3em; color:var(--accent-blue);">0 pt</strong>
                             </div>
                         </div>
                     </div>
@@ -283,9 +307,9 @@
 
                 <input type="hidden" name="purpose" id="finalPurpose">
 
-                <hr style="border-color:#333; margin: 20px 0;">
+                <hr style="border-color:var(--border-color); margin: 25px 0;">
 
-                <div style="font-size: 0.9em;">
+                <div style="font-size: 0.95em; line-height: 1.8;">
                     <label><input type="checkbox" required> <strong>参加者全員の「会員登録」を必須とすることに同意します</strong></label>
                     <label><input type="checkbox" required> 店舗スタッフは運営補助を行いません</label>
                     <label><input type="checkbox" required> トイレ・モニター(HDMI/Type-C)使用可</label>
@@ -352,10 +376,10 @@
             displays.remPoints.textContent = remain.toLocaleString() + " pt";
             
             if(remain < 0) {
-                displays.remPoints.style.color = "#ff3333";
+                displays.remPoints.style.color = "#d32f2f"; // 赤
                 displays.remPoints.textContent += " (不足)";
             } else {
-                displays.remPoints.style.color = "#00e5ff";
+                displays.remPoints.style.color = "#007bc7"; // 青
             }
 
             let combinedText = `【大会名・用途】\n${inputs.eventTitle.value}\n\n` +
@@ -380,20 +404,13 @@
             
             const formData = new FormData(form);
             
-            // CORSエラー対策済み
             fetch(SCRIPT_URL, { method: 'POST', body: formData })
-                .then(res => {
-                    showSuccess();
-                })
-                .catch(err => {
-                    console.log(err);
-                    showSuccess();
-                });
+                .then(res => { showSuccess(); })
+                .catch(err => { console.log(err); showSuccess(); });
         });
 
         function showSuccess() {
             alert('送信しました。\n\n※まだ予約は確定しておりません。\n担当者からメールで連絡させていただきます。');
-            
             form.reset();
             inputs.fee.value = 2000;
             inputs.count.value = 32;
