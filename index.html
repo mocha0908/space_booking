@@ -55,6 +55,16 @@
             color: #fff;
         }
 
+        /* 重要なお知らせボックス */
+        .notice-box {
+            background-color: rgba(255, 215, 0, 0.1);
+            border: 1px solid var(--accent-gold);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
         /* 折りたたみシミュレーター */
         details.sim-box {
             background: #000;
@@ -67,17 +77,12 @@
             font-weight: bold;
             color: var(--accent-blue);
             cursor: pointer;
-            list-style: none; /* 三角を消す */
+            list-style: none;
         }
-        details.sim-box summary::after {
-            content: " ▼";
-            font-size: 0.8em;
-        }
-        details.sim-box[open] summary::after {
-            content: " ▲";
-        }
+        details.sim-box summary::after { content: " ▼"; font-size: 0.8em; }
+        details.sim-box[open] summary::after { content: " ▲"; }
 
-        /* 計算結果の数字 */
+        /* 計算結果 */
         .calc-row {
             display: flex;
             justify-content: space-between;
@@ -107,7 +112,6 @@
             box-shadow: 0 0 5px var(--primary) !important;
         }
 
-        /* 送信ボタン */
         button[type="submit"] {
             background: var(--primary);
             border: none;
@@ -117,17 +121,9 @@
             margin-top: 20px;
             width: 100%;
         }
-        button[type="submit"]:hover {
-            background-color: #cc0044;
-        }
-
-        /* レンジスライダー */
-        input[type=range] {
-            height: 6px;
-            background: #444;
-            border-radius: 5px;
-            outline: none;
-        }
+        button[type="submit"]:hover { background-color: #cc0044; }
+        
+        input[type=range] { height: 6px; background: #444; border-radius: 5px; outline: none; }
     </style>
 </head>
 <body>
@@ -152,8 +148,14 @@
                 </div>
                 <div>
                     <small>特典</small><br>
-                    <span style="color:var(--accent-blue)">会場費全額ポイント還元</span>
+                    <span style="color:var(--accent-blue)">会場費全額還元</span>
                 </div>
+            </div>
+            
+            <div class="notice-box">
+                <strong>⚠️ 還元ポイント（賞品代）のお渡しについて</strong><br>
+                会場費相当額（32,000円）の還元は、イベント終了後に<strong>【銀行振込】</strong>にて送金いたします。<br>
+                ※振込先口座はイベント当日に確認させていただきます。
             </div>
         </section>
 
@@ -164,6 +166,10 @@
 
                 <label>お名前 (主催者名)
                     <input type="text" name="name" required placeholder="例：キングダム太郎">
+                </label>
+                
+                <label>お名前 (カタカナ) <small>※振込手続きに使用します</small>
+                    <input type="text" name="name_kana" required placeholder="例：キングダムタロウ" pattern="[\u30A1-\u30F6ー\s　]*" title="カタカナで入力してください">
                 </label>
 
                 <div class="grid">
@@ -188,26 +194,15 @@
                     <div class="grid">
                         <div>
                             <h5>💰 収益予測</h5>
-                            <label>参加費 (1人)
-                                <input type="number" id="entryFee" value="2000" step="100">
-                            </label>
+                            <label>参加費 (1人) <input type="number" id="entryFee" value="2000" step="100"></label>
                             <label>想定人数: <span id="playerCountDisplay" style="color:var(--accent-blue)">32名</span>
                                 <input type="range" id="playerCountRange" min="1" max="32" value="32">
                             </label>
 
                             <div style="background:#222; padding:10px; border-radius:5px;">
-                                <div class="calc-row">
-                                    <span>売上総額</span>
-                                    <span id="totalRevenue">¥64,000</span>
-                                </div>
-                                <div class="calc-row">
-                                    <span>会場費</span>
-                                    <span style="color:#ff8888">-¥32,000</span>
-                                </div>
-                                <div class="calc-total">
-                                    <span>主催者利益</span>
-                                    <span id="organizerProfit">¥32,000</span>
-                                </div>
+                                <div class="calc-row"><span>売上総額</span><span id="totalRevenue">¥64,000</span></div>
+                                <div class="calc-row"><span>会場費</span><span style="color:#ff8888">-¥32,000</span></div>
+                                <div class="calc-total"><span>主催者利益</span><span id="organizerProfit">¥32,000</span></div>
                             </div>
                         </div>
 
@@ -222,7 +217,6 @@
                                 <label>Best4(各1) <input type="number" id="prizeTop4" value="2500"></label>
                                 <label>Best8(各1) <input type="number" id="prizeTop8" value="0"></label>
                             </div>
-
                             <div style="text-align:right; margin-top:10px;">
                                 <small>残りポイント: </small>
                                 <strong id="remainingPoints" style="font-size:1.2em; color:var(--accent-blue);">0 pt</strong>
@@ -245,6 +239,7 @@
                     <label><input type="checkbox" required> 参加者全員の「会員登録」が必須です</label>
                     <label><input type="checkbox" required> 店舗スタッフは運営補助を行いません</label>
                     <label><input type="checkbox" required> トイレ・モニター(HDMI/Type-C)使用可</label>
+                    <label><input type="checkbox" required> <strong>還元金の受け取りは「銀行振込」になることに同意します</strong></label>
                 </div>
 
                 <button type="submit" id="submitBtn">予約を申し込む</button>
@@ -254,7 +249,7 @@
     </main>
 
     <script>
-        // ★ここにGASのURLを貼り付け
+        // ★ここにGASのURLを貼り付け（変更なし）
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyb1L9lbXiCFtR4hypvZSurkCHRLYwZIHO4vRxtU8ipyElckZGV5az30Kn-Dcr74qrN/exec';
 
         // --- 変数定義 ---
@@ -286,18 +281,14 @@
             let players = parseInt(inputs.count.value);
             let fee = parseInt(inputs.fee.value) || 0;
             
-            // 収益計算
             let revenue = fee * players;
             let profit = revenue - RENT_FEE;
 
             displays.count.textContent = players + "名";
             displays.revenue.textContent = "¥" + revenue.toLocaleString();
             displays.profit.textContent = "¥" + profit.toLocaleString();
-            
-            // 赤字なら赤文字にするが、送信は止めない
             displays.profit.className = profit < 0 ? "text-red" : "text-gold";
 
-            // ポイント計算
             let pPart = parseInt(inputs.part.value) || 0;
             let p1 = parseInt(inputs.p1.value) || 0;
             let p2 = parseInt(inputs.p2.value) || 0;
@@ -309,7 +300,6 @@
 
             displays.remPoints.textContent = remain.toLocaleString() + " pt";
             
-            // ポイント不足時の警告（赤文字にするだけ）
             if(remain < 0) {
                 displays.remPoints.style.color = "#ff3333";
                 displays.remPoints.textContent += " (不足)";
@@ -317,24 +307,15 @@
                 displays.remPoints.style.color = "#00e5ff";
             }
 
-            // 送信データの結合処理
-            // GAS側を変えずに済むよう、全ての情報を「利用用途(purpose)」にまとめて送る
-            let combinedText = `【大会名】 ${inputs.eventTitle.value}\n\n` +
-                               `【シミュレーション結果】\n` +
-                               `・想定人数: ${players}名 / 参加費: ${fee}円\n` +
-                               `・予想売上: ${revenue}円 (利益: ${profit}円)\n` +
-                               `・ポイント配分: 参加賞${pPart} / 優勝${p1} / 2位${p2} ... (残${remain}pt)\n\n` +
+            // シミュレーション結果を送らない修正（タイトルと備考のみ）
+            let combinedText = `【大会名・用途】\n${inputs.eventTitle.value}\n\n` +
                                `【備考・その他】\n${inputs.userMemo.value}`;
             
             displays.finalPurpose.value = combinedText;
         }
 
-        // --- イベントリスナー ---
-        Object.values(inputs).forEach(el => {
-            el.addEventListener('input', calculate);
-        });
-
-        calculate(); // 初期実行
+        Object.values(inputs).forEach(el => { el.addEventListener('input', calculate); });
+        calculate();
 
         // --- 送信処理 ---
         const form = document.getElementById('reserveForm');
@@ -342,7 +323,7 @@
 
         form.addEventListener('submit', e => {
             e.preventDefault();
-            calculate(); // 送信直前に最新値をセット
+            calculate();
             
             btn.disabled = true;
             btn.innerText = "送信中...";
@@ -351,9 +332,8 @@
             
             fetch(SCRIPT_URL, { method: 'POST', body: formData })
                 .then(res => {
-                    alert('✅ 申し込み完了\n\n店舗からの連絡をお待ちください。');
+                    alert('✅ 申し込み完了\n\n内容を確認後、担当者よりご連絡いたします。');
                     form.reset();
-                    // リセット後に初期値を戻す
                     inputs.fee.value = 2000;
                     inputs.count.value = 32;
                     calculate();
