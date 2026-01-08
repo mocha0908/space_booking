@@ -25,7 +25,6 @@
             padding-bottom: 50px;
         }
 
-        /* ヘッダー */
         header {
             text-align: center;
             padding: 30px 20px;
@@ -40,7 +39,6 @@
             text-shadow: 0 0 10px var(--primary);
         }
 
-        /* カード共通 */
         .card {
             background-color: var(--card-bg);
             border: 1px solid #333;
@@ -55,17 +53,16 @@
             color: #fff;
         }
 
-        /* 重要なお知らせボックス */
+        /* 支払い案内ボックス */
         .notice-box {
-            background-color: rgba(255, 215, 0, 0.1);
-            border: 1px solid var(--accent-gold);
+            background-color: rgba(0, 229, 255, 0.1);
+            border: 1px solid var(--accent-blue);
             padding: 15px;
             border-radius: 8px;
             margin-bottom: 20px;
             font-size: 0.95em;
         }
 
-        /* 折りたたみシミュレーター */
         details.sim-box {
             background: #000;
             border: 1px solid #444;
@@ -75,14 +72,13 @@
         }
         details.sim-box summary {
             font-weight: bold;
-            color: var(--accent-blue);
+            color: var(--accent-gold);
             cursor: pointer;
             list-style: none;
         }
         details.sim-box summary::after { content: " ▼"; font-size: 0.8em; }
         details.sim-box[open] summary::after { content: " ▲"; }
 
-        /* 計算結果 */
         .calc-row {
             display: flex;
             justify-content: space-between;
@@ -101,7 +97,6 @@
         .text-red { color: var(--error); }
         .text-blue { color: var(--accent-blue); }
 
-        /* 入力エリア */
         input, textarea, select {
             background-color: #2a2a2a !important;
             border: 1px solid #444 !important;
@@ -147,15 +142,16 @@
                     <strong>最大 32名</strong>
                 </div>
                 <div>
-                    <small>特典</small><br>
-                    <span style="color:var(--accent-blue)">会場費全額還元</span>
+                    <small>特典 (通販ポイント)</small><br>
+                    <span style="color:var(--accent-blue)">32,000 pt進呈</span>
                 </div>
             </div>
             
             <div class="notice-box">
-                <strong>⚠️ 還元ポイント（賞品代）のお渡しについて</strong><br>
-                会場費相当額（32,000円）の還元は、イベント終了後に<strong>【銀行振込】</strong>にて送金いたします。<br>
-                ※振込先口座はイベント当日に確認させていただきます。
+                <strong>💳 会場費のお支払いについて</strong><br>
+                会場費32,000円は<strong>【銀行振込】</strong>にて事前にお支払いいただきます。<br>
+                入金確認後、<strong>「トレカキングダム通販サイト」で使える32,000ポイント</strong>を付与いたします。<br>
+                <small>※振込先口座は、お申し込み後にメールにてご案内いたします。</small>
             </div>
         </section>
 
@@ -168,7 +164,7 @@
                     <input type="text" name="name" required placeholder="例：キングダム太郎">
                 </label>
                 
-                <label>お名前 (カタカナ) <small>※振込手続きに使用します</small>
+                <label>お名前 (カタカナ) <small>※振込名義人の確認に使用します</small>
                     <input type="text" name="name_kana" required placeholder="例：キングダムタロウ" pattern="[\u30A1-\u30F6ー\s　]*" title="カタカナで入力してください">
                 </label>
 
@@ -207,7 +203,7 @@
                         </div>
 
                         <div>
-                            <h5>🎁 ポイント配分 (保有: 32,000pt)</h5>
+                            <h5>🎁 通販ポイント配分 (32,000pt)</h5>
                             <label>参加賞(全員/250pt~) <input type="number" id="prizePart" value="250" step="10"></label>
                             <div class="grid">
                                 <label>優勝 <input type="number" id="prize1st" value="10000"></label>
@@ -239,7 +235,8 @@
                     <label><input type="checkbox" required> 参加者全員の「会員登録」が必須です</label>
                     <label><input type="checkbox" required> 店舗スタッフは運営補助を行いません</label>
                     <label><input type="checkbox" required> トイレ・モニター(HDMI/Type-C)使用可</label>
-                    <label><input type="checkbox" required> <strong>還元金の受け取りは「銀行振込」になることに同意します</strong></label>
+                    
+                    <label><input type="checkbox" required> <strong>会場費32,000円を指定口座へ振り込むことに同意します</strong></label>
                 </div>
 
                 <button type="submit" id="submitBtn">予約を申し込む</button>
@@ -332,7 +329,7 @@
             
             fetch(SCRIPT_URL, { method: 'POST', body: formData })
                 .then(res => {
-                    alert('✅ 申し込み完了\n\n内容を確認後、担当者よりご連絡いたします。');
+                    alert('✅ 申し込み完了\n\nご入力いただいたメールアドレス（または電話番号）宛に、\n振込先口座のご案内をお送りいたします。');
                     form.reset();
                     inputs.fee.value = 2000;
                     inputs.count.value = 32;
